@@ -1,0 +1,10 @@
+command: apache2
+
+pre_conf_commands:
+    - set_access
+
+config_files:
+    - /etc/apache2/sites-enabled/omega.conf.tpl
+
+secret_env:
+    - AUTH*

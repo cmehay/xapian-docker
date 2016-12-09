@@ -1,0 +1,44 @@
+<VirtualHost *:80>
+DefaultType text/html
+
+SetEnv OMEGA_CONFIG_FILE /etc/omega.conf
+
+DocumentRoot /var/www/pdf-server
+<Directory />
+Options FollowSymLinks
+AllowOverride None
+</Directory>
+
+<Directory /var/www/pdf-server>
+Options Indexes FollowSymLinks MultiViews
+AllowOverride None
+{% if 'AUTH_USER' in env and 'AUTH_PASSWD' in env %}
+Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+AuthType Basic
+AuthName "Access"
+AuthUserFile /etc/apache2/password
+Require valid-user
+{% else %}
+Require all granted
+{% endif %}
+</Directory>
+
+ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+<Directory "/usr/lib/cgi-bin">
+AllowOverride None
+{% if 'AUTH_USER' in env and 'AUTH_PASSWD' in env %}
+Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+AuthType Basic
+AuthName "Access"
+AuthUserFile /etc/apache2/password
+Require valid-user
+{% else %}
+Require all granted
+{% endif %}
+</Directory>
+
+ErrorLog /dev/stderr
+LogLevel warn
+CustomLog /dev/stdout combined
+
+</VirtualHost>

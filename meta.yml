@@ -1,0 +1,6 @@
+version: '2'
+
+services:
+    meta:
+        volumes:
+            - pdf-files:/var/www/pdf-server/docs
