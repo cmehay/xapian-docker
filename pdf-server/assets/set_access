@@ -1,0 +1,5 @@
+#!/bin/sh
+
+if [ ! -z "$AUTH_USER" ] && [ ! -z "$AUTH_PASSWD" ]; then
+    htpasswd -b -c -s /etc/apache2/password "$AUTH_USER" "$AUTH_PASSWD"
+fi

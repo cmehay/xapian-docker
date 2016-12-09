@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -eu
+
+DIR=${DOC_DIR}
+
+update() {
+    echo "Wait for files"
+    while [ "$(ls -l ${DIR}/ocr/)" != "$(sleep 5 && ls -l ${DIR}/ocr/)" ]; do
+        sleep 1
+    done
+    echo "Remove duplicated files"
+    fdupes -d -N ${DIR}/orc/ ${DIR}/raws/
+    echo "Update database at $(date)"
+    omindex --mime-type pdf:application/pdf \
+            --db /var/lib/xapian-omega/data/default \
+            --url /docs/ ${DIR}/ocr/
+}
+
+trap "update" SIGHUP
+update
+while :; do
+    sleep 30 &
+    wait
+done

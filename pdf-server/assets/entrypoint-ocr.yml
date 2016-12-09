@@ -1,0 +1,4 @@
+command: run-ocr
+
+user: www-data
+group: www-data

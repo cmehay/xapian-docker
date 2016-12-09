@@ -1,0 +1,62 @@
+version: '2'
+
+services:
+    apache:
+        build: pdf-server
+        image: goldy/pdf-server
+        command:
+            - apache2
+            - -DFOREGROUND
+        extends:
+            service: meta
+            file: meta.yml
+        volumes_from:
+            - index
+        expose:
+            - 80
+        ports:
+            - 80:80
+        environment:
+            ENTRYPOINT_CONFIG: entrypoint-apache.yml
+            AUTH_USER: username
+            AUTH_PASSWD: password
+
+
+    index:
+        build: pdf-server
+        image: goldy/pdf-server
+        command:
+            - xapian-update
+        environment:
+            ENTRYPOINT_CONFIG: entrypoint-update.yml
+            ENTRYPOINT_USER: 33
+        extends:
+            service: meta
+            file: meta.yml
+        restart: on-failure
+
+    ocr:
+        build: pdf-server
+        image: goldy/pdf-server
+        command:
+            - run-ocr
+        environment:
+            ENTRYPOINT_CONFIG: entrypoint-ocr.yml
+            ENTRYPOINT_USER: 33
+            LANGUAGE: fra
+        extends:
+            service: meta
+            file: meta.yml
+        restart: on-failure
+
+    sync:
+        image: goldy/syncthing
+        environment:
+            ENTRYPOINT_USER: 33
+        volumes:
+            - pdf-files:/var/syncthing
+
+
+volumes:
+    pdf-files:
+        driver: local

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ ! -z "${LANGUAGE}" ]; then
+    opt="-l ${LANGUAGE}"
+fi
+
+exec pypdfocr -w /var/www/pdf-server/upload $opt -f -c /var/local/etc/ocr-config.yml

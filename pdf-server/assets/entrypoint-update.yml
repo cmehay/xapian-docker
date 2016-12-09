@@ -1,0 +1,11 @@
+command: xapian-update
+
+user: www-data
+group: www-data
+
+pre_conf_commands:
+    - chown -R www-data:www-data /var/www/pdf-server /var/lib/xapian-omega/
+
+reload:
+    files:
+        - /var/www/pdf-server/docs/ocr/*
