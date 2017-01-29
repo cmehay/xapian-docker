@@ -8,7 +8,7 @@ services:
             - apache2
             - -DFOREGROUND
         extends:
-            service: meta
+            service: auth
             file: meta.yml
         volumes_from:
             - index
@@ -18,9 +18,6 @@ services:
             - 80:80
         environment:
             ENTRYPOINT_CONFIG: entrypoint-apache.yml
-            AUTH_USER: username
-            AUTH_PASSWD: password
-
 
     index:
         build: pdf-server
@@ -43,9 +40,8 @@ services:
         environment:
             ENTRYPOINT_CONFIG: entrypoint-ocr.yml
             ENTRYPOINT_USER: 33
-            LANGUAGE: fra
         extends:
-            service: meta
+            service: lang
             file: meta.yml
         restart: on-failure
 
