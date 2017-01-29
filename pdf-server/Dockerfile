@@ -20,7 +20,7 @@ RUN apt-get update && apt-get -y install python-dev \
 
 RUN pip install -U pip
 
-RUN pip install -U pyentrypoint==0.4.4 \
+RUN pip install -U pyentrypoint==0.5.0 \
                    pypdfocr==0.9.1
 
 # Dependancy for OCR

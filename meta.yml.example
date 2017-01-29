@@ -1,0 +1,21 @@
+# You can edit here and save file as meta.yml
+
+version: '2'
+
+services:
+    meta:
+        volumes:
+            - pdf-files:/var/www/pdf-server/docs
+
+    auth:
+        environment:
+            AUTH_USER: username
+            AUTH_PASSWD: password
+        extends:
+            service: meta
+
+    lang:
+        environment:
+            LANGUAGE: fra
+        extends:
+            service: meta
