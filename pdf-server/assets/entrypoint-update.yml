@@ -4,6 +4,7 @@ user: www-data
 group: www-data
 
 pre_conf_commands:
+    - mkdir -p /var/www/pdf-server/docs/ocr/
     - chown -R www-data:www-data /var/www/pdf-server /var/lib/xapian-omega/
 
 reload:

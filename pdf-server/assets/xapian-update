@@ -10,7 +10,7 @@ update() {
         sleep 1
     done
     echo "Remove duplicated files"
-    fdupes -d -N ${DIR}/orc/ ${DIR}/raws/
+    fdupes -d -N ${DIR}/ocr/ ${DIR}/raws/
     echo "Update database at $(date)"
     omindex --mime-type pdf:application/pdf \
             --db /var/lib/xapian-omega/data/default \
