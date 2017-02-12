@@ -1,7 +1,7 @@
 command: run-ocr
 
 pre_conf_commands:
-    - mkdir -p /var/www/pdf-server/upload /var/www/pdf-server/docs/raws /var/www/pdf-server/docs/ocr
+    - mkdir -p /var/www/pdf-server/docs/upload /var/www/pdf-server/docs/raws /var/www/pdf-server/docs/ocr
     - chown -R www-data:www-data /var/www/pdf-server
 
 user: www-data
