@@ -14,10 +14,9 @@ services:
             - index
         expose:
             - 80
-        ports:
-            - 80:80
         environment:
             ENTRYPOINT_CONFIG: entrypoint-apache.yml
+        restart: always
 
     index:
         build: pdf-server
@@ -50,9 +49,24 @@ services:
         environment:
             ENTRYPOINT_USER: 33
         volumes:
-            - pdf-files:/var/syncthing
+            - pdf-files:/var/syncthing/documents/
+        restart: always
+
+    tor:
+        image: goldy/tor-hidden-service
+        links:
+            - apache
+            - sync
+        environment:
+            APACHE_PORTS: 80:80
+            SYNC_PORTS: 80:8384
+        volumes:
+            - tor-keys:/var/lib/tor
+        restart: on-failure
 
 
 volumes:
     pdf-files:
+        driver: local
+    tor-keys:
         driver: local
